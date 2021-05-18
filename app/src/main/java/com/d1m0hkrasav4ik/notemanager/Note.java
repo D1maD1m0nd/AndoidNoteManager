@@ -20,12 +20,14 @@ public class Note implements Parcelable {
     protected Note(Parcel in) {
         name = in.readString();
         descriptionIndex = in.readInt();
+        date = (java.util.Date) in.readSerializable();
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(getName());
         dest.writeInt(getDescriptionIndex());
+        dest.writeSerializable(date);
     }
 
     @Override
@@ -51,5 +53,9 @@ public class Note implements Parcelable {
 
     public int getDescriptionIndex() {
         return descriptionIndex;
+    }
+
+    public Date getDate() {
+        return date;
     }
 }

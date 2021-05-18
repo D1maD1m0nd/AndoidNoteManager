@@ -47,9 +47,12 @@ public class DescriptionFragment extends Fragment {
         String[] descriptions = getResources().getStringArray(R.array.descriptions);
         // Выбрать по индексу подходящий
         textView.setText(descriptions[note.getDescriptionIndex()]);
-        // Установить название города
+        // Установить название заметки
         TextView cityNameView = view.findViewById(R.id.textView);
         cityNameView.setText(note.getName());
+
+        TextView date = view.findViewById(R.id.timeNow);
+        date.setText(note.getDate().toString());
         return view;
     }
 
