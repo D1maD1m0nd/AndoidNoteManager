@@ -1,11 +1,14 @@
 package com.d1m0hkrasav4ik.notemanager;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,11 +16,17 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import org.w3c.dom.Node;
+
 import java.util.Date;
 
 
 public class NameNoteFragment extends Fragment {
-    Note currentNote;//текущая заметка
+    private Note currentNote;//текущая заметка
+    public static final String CURRENT_NOTE = "CurrentNote";
+    private boolean isLand;
+
+
     // При создании фрагмента укажем его макет
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -32,6 +41,32 @@ public class NameNoteFragment extends Fragment {
                               @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initList(view);
+    }
+    // Сохраним текущую позицию (вызывается перед выходом из фрагмента)
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        outState.putParcelable(CURRENT_NOTE, currentNote);
+        super.onSaveInstanceState(outState);
+    }
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        // Определение, можно ли будет расположить рядом герб в другом фрагменте
+        isLand = getResources().getConfiguration().orientation
+                == Configuration.ORIENTATION_LANDSCAPE;
+        // Если это не первое создание, то восстановим текущую позицию
+        if (savedInstanceState != null) {
+            // Восстановление текущей позиции.
+            currentNote = savedInstanceState.getParcelable(CURRENT_NOTE);
+        } else {
+            // Если восстановить не удалось, то сделаем объект с первым индексом
+            currentNote = new Note(getResources().getStringArray(R.array.names)[0], 0, new Date());
+        }
+
+        if (isLand) {
+            showDescriptionNoteLand(currentNote);
+        }
+
     }
 
     private void initList(View view) {
@@ -50,8 +85,16 @@ public class NameNoteFragment extends Fragment {
             //назначаем слушателя события
             tv.setOnClickListener(v -> {
                 currentNote = new Note(note, fi, new Date());
-                showDescriptionNotePort(currentNote);
+                showDescription(currentNote);
             });
+        }
+    }
+
+    private void showDescription(Note currentNote){
+        if (isLand) {
+            showDescriptionNoteLand(currentNote);
+        } else {
+            showDescriptionNotePort(currentNote);
         }
     }
 
@@ -61,5 +104,17 @@ public class NameNoteFragment extends Fragment {
 
         intent.putExtra(DescriptionFragment.ARG_NOTE, currentNote);
         startActivity(intent);
+    }
+
+    private void showDescriptionNoteLand(Note currentNote) {
+        // Создаём новый фрагмент с текущей позицией для вывода герба
+        DescriptionFragment detail = DescriptionFragment.newInstance(currentNote);
+
+        // Выполняем транзакцию по замене фрагмента
+        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.descriptionContainer, detail);  // замена фрагмента
+        fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+        fragmentTransaction.commit();
     }
 }
