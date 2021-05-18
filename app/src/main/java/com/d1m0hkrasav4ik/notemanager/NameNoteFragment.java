@@ -1,5 +1,6 @@
 package com.d1m0hkrasav4ik.notemanager;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,6 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import java.util.Date;
 
 
 public class NameNoteFragment extends Fragment {
@@ -42,7 +45,21 @@ public class NameNoteFragment extends Fragment {
             tv.setText(note);
             tv.setTextSize(TEXT_SIZE);
             layoutView.addView(tv);
-        }
 
+            final int fi = i;
+            //назначаем слушателя события
+            tv.setOnClickListener(v -> {
+                currentNote = new Note(note, fi, new Date());
+                showDescriptionNotePort(currentNote);
+            });
+        }
+    }
+
+    private void showDescriptionNotePort(Note currentNote) {
+        Intent intent = new Intent();
+        intent.setClass(getActivity(), DescriptionActivity.class);
+
+        intent.putExtra(DescriptionFragment.ARG_NOTE, currentNote);
+        startActivity(intent);
     }
 }
