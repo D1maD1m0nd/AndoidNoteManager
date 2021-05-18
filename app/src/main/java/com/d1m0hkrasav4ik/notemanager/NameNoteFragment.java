@@ -3,6 +3,11 @@ package com.d1m0hkrasav4ik.notemanager;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -10,20 +15,12 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-
-import org.w3c.dom.Node;
-
 import java.util.Date;
 
 
 public class NameNoteFragment extends Fragment {
-    private Note currentNote;//текущая заметка
     public static final String CURRENT_NOTE = "CurrentNote";
+    private Note currentNote;//текущая заметка
     private boolean isLand;
 
 
@@ -42,12 +39,14 @@ public class NameNoteFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         initList(view);
     }
+
     // Сохраним текущую позицию (вызывается перед выходом из фрагмента)
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         outState.putParcelable(CURRENT_NOTE, currentNote);
         super.onSaveInstanceState(outState);
     }
+
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -90,7 +89,7 @@ public class NameNoteFragment extends Fragment {
         }
     }
 
-    private void showDescription(Note currentNote){
+    private void showDescription(Note currentNote) {
         if (isLand) {
             showDescriptionNoteLand(currentNote);
         } else {

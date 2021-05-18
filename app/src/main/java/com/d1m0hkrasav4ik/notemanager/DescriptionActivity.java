@@ -1,9 +1,9 @@
 package com.d1m0hkrasav4ik.notemanager;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.res.Configuration;
 import android.os.Bundle;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class DescriptionActivity extends AppCompatActivity {
 
@@ -12,12 +12,12 @@ public class DescriptionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_description);
 
-        if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
             finish();
             return;
         }
 
-        if(savedInstanceState == null){
+        if (savedInstanceState == null) {
             DescriptionFragment f = new DescriptionFragment();
             f.setArguments(getIntent().getExtras());
 
