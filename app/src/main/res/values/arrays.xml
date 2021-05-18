@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="names">
+        <item>Почитать книгу</item>
+        <item>Пописать код</item>
+        <item>Поговорить с девушкой</item>
+        <item>Сходить в зал</item>
+        <item>Пойти поспать</item>
+    </string-array>
+
+    <string-array name="descriptions">
+        <item>Почитать книгу Ошу о познании себя, Глава 7</item>
+        <item>Пописать код</item>
+        <item>Поговорить с девушкой</item>
+        <item>Сходить в зал</item>
+        <item>Пойти поспать</item>
+    </string-array>
+</resources>
