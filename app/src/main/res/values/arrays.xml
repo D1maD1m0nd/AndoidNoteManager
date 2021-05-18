@@ -9,10 +9,10 @@
     </string-array>
 
     <string-array name="descriptions">
-        <item>Почитать книгу Ошу о познании себя, Глава 7</item>
-        <item>Пописать код</item>
-        <item>Поговорить с девушкой</item>
-        <item>Сходить в зал</item>
-        <item>Пойти поспать</item>
+        <item>Дочитать главу 15 книги HeadFirst и выполнить оттуда примеры</item>
+        <item>Пописать код для домашних заданий по GeekBrains Task6 и Task7</item>
+        <item>Поговорить с девушкой, посмотреть фильм, поужинать вместе</item>
+        <item>Сходить в зал, потратить час и не умереть</item>
+        <item>Пойти поспать, одеть пижаму и уснуть мур</item>
     </string-array>
 </resources>
