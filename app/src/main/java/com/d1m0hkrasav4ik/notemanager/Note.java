@@ -57,7 +57,7 @@ public class Note implements Parcelable {
         return date;
     }
 
-    public void setDate(Date date){
+    public void setDate(Date date) {
         this.date = date;
     }
 }
