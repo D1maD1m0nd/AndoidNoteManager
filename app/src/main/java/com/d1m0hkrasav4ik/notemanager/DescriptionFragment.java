@@ -1,18 +1,25 @@
 package com.d1m0hkrasav4ik.notemanager;
 
+import android.app.DatePickerDialog;
 import android.os.Bundle;
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
+
+import java.util.Calendar;
 
 
 public class DescriptionFragment extends Fragment {
     public static final String ARG_NOTE = "note";
     private Note note;
-
+    TextView date;
+    Calendar dateAndTime=Calendar.getInstance();
     // Фабричный метод создания фрагмента
     // Фрагменты рекомендуется создавать через фабричные методы.
     public static DescriptionFragment newInstance(Note note) {
@@ -45,12 +52,38 @@ public class DescriptionFragment extends Fragment {
         // Выбрать по индексу подходящий
         textView.setText(descriptions[note.getDescriptionIndex()]);
         // Установить название заметки
-        TextView cityNameView = view.findViewById(R.id.textView);
-        cityNameView.setText(note.getName());
+        TextView noteNameView = view.findViewById(R.id.textView);
+        noteNameView.setText(note.getName());
 
-        TextView date = view.findViewById(R.id.timeNow);
+        date = view.findViewById(R.id.timeNow);
         date.setText(note.getDate().toString());
+
+        Button button = view.findViewById(R.id.buttonSetTime);
+        button.setOnClickListener(v ->{
+            setDate();
+        });
         return view;
     }
+
+    // установка обработчика выбора даты
+    DatePickerDialog.OnDateSetListener d=new DatePickerDialog.OnDateSetListener() {
+        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+            dateAndTime.set(Calendar.YEAR, year);
+            dateAndTime.set(Calendar.MONTH, monthOfYear);
+            dateAndTime.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+            note.setDate(dateAndTime.getTime());
+            date.setText(note.getDate().toString());
+        }
+    };
+
+    // отображаем диалоговое окно для выбора даты
+    public void setDate() {
+        new DatePickerDialog(getContext(), d,
+                dateAndTime.get(Calendar.YEAR),
+                dateAndTime.get(Calendar.MONTH),
+                dateAndTime.get(Calendar.DAY_OF_MONTH))
+                .show();
+    }
+
 
 }
