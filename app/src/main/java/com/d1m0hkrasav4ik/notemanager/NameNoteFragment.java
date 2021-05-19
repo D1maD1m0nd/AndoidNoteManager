@@ -50,7 +50,7 @@ public class NameNoteFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        // Определение, можно ли будет расположить рядом герб в другом фрагменте
+        // Определение, можно ли будет расположить рядом описание
         isLand = getResources().getConfiguration().orientation
                 == Configuration.ORIENTATION_LANDSCAPE;
         // Если это не первое создание, то восстановим текущую позицию
