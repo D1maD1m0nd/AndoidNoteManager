@@ -2,4 +2,5 @@
 <resources>
     <dimen name="text_size_title_description">40sp</dimen>
     <dimen name="text_size_content_description">25sp</dimen>
+    <dimen name="text_size_settings">20sp</dimen>
 </resources>
