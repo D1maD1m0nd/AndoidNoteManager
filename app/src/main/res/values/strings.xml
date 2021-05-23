@@ -12,4 +12,9 @@
     <string name="title_about_app">О приложении</string>
     <string name="author">com.d1m0hkrasav4ik.notemanager</string>
     <string name="year">2021</string>
+    <string name="notes">Заметки</string>
+    <string name="settings">Настройки</string>
+    <string name="fragment_navigation">Главное меню</string>
+    <string name="navigation_drawer_open">open</string>
+    <string name="navigation_drawer_close">close</string>
 </resources>
