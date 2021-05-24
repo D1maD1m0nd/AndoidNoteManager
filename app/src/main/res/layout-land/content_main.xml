@@ -5,9 +5,8 @@
     android:orientation="horizontal">
 
 
-    <fragment
-        android:id="@+id/notes"
-        android:name="com.d1m0hkrasav4ik.notemanager.NameNoteFragment"
+    <FrameLayout
+        android:id="@+id/notes_app_сontainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1" />
