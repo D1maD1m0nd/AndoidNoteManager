@@ -1,3 +1,21 @@
 <resources>
+
     <string name="app_name">Note Manager</string>
+    <string name="change_date">Изменить дату</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="notification_on">Уведомления</string>
+    <string name="night_theme_on">Темная тема</string>
+    <string name="settings_app">Настройки</string>
+    <string name="change_settings">Передерните ползунок</string>
+    <string name="about_app">Приложения для ведения списка заметок</string>
+    <string name="title_about_app">О приложении</string>
+    <string name="author">com.d1m0hkrasav4ik.notemanager</string>
+    <string name="year">2021</string>
+    <string name="notes">Заметки</string>
+    <string name="settings">Настройки</string>
+    <string name="fragment_navigation">Главное меню</string>
+    <string name="navigation_drawer_open">open</string>
+    <string name="navigation_drawer_close">close</string>
+    <string name="user_name">Дима Авдошин</string>
 </resources>
