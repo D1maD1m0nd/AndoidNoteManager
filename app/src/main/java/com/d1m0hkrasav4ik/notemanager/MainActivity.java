@@ -72,4 +72,6 @@ public class MainActivity extends AppCompatActivity {
         transaction.replace(R.id.notes_app_сontainer, fragment);
         transaction.commit();
     }
+
+
 }
