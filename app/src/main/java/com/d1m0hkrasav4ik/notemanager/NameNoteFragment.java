@@ -8,14 +8,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.Date;
+import java.util.Locale;
 
 
 public class NameNoteFragment extends Fragment {
@@ -29,7 +33,13 @@ public class NameNoteFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_name_note, container, false);
+        View view = inflater.inflate(R.layout.fragment_name_note,
+                container,
+                false);
+        RecyclerView recyclerView = view.findViewById(R.id.recycler_view_lines);
+        INoteCardSource data = new NoteCardSourceImpl(getResources()).initData();
+        initRecyclerView(recyclerView, data);
+        return view;
     }
 
     // вызывается после создания макета фрагмента, здесь мы проинициализируем список
@@ -37,7 +47,7 @@ public class NameNoteFragment extends Fragment {
     public void onViewCreated(@NonNull View view,
                               @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        initList(view);
+        //initList(view);
     }
 
     // Сохраним текущую позицию (вызывается перед выходом из фрагмента)
@@ -67,7 +77,23 @@ public class NameNoteFragment extends Fragment {
         }
 
     }
+    private void initRecyclerView(RecyclerView recyclerView, INoteCardSource data){
+        recyclerView.setHasFixedSize(true);
 
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(layoutManager);
+
+        NoteAdapter adapter = new NoteAdapter(data);
+        recyclerView.setAdapter(adapter);
+
+        adapter.setItemClickListener(new NoteAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Toast.makeText(getContext(), String.format(Locale.getDefault(), "Позиция - %d", position), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
     private void initList(View view) {
         LinearLayout layoutView = (LinearLayout) view;
         final int TEXT_SIZE = 35;
