@@ -20,7 +20,7 @@ public class NoteCardSourceImpl implements INoteCardSource {
         String[] descriptions = resources.getStringArray(R.array.descriptions);
         final int len = descriptions.length;
         for (int i = 0; i < len; i++) {
-            dataSource.add(new Note(names[i], Calendar.getInstance().getTime(),descriptions[i]));
+            dataSource.add(new Note(names[i], Calendar.getInstance().getTime(),descriptions[i], i));
         }
         return this;
     }

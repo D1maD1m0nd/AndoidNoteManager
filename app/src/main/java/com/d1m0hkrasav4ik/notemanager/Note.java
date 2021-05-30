@@ -6,6 +6,35 @@ import android.os.Parcelable;
 import java.util.Date;
 
 public class Note implements Parcelable {
+
+    private final String name;
+    private final String description;
+    private final int descriptionIndex;
+    private Date date;
+
+    public Note(String name, Date date,String description, int descriptionIndex) {
+        this.name = name;
+        this.date = date;
+        this.descriptionIndex = descriptionIndex;
+        this.description = description;
+    }
+
+
+    protected Note(Parcel in) {
+        name = in.readString();
+        description = in.readString();
+        descriptionIndex = in.readInt();
+        date = (Date)in.readSerializable();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(name);
+        dest.writeString(description);
+        dest.writeInt(descriptionIndex);
+        dest.writeSerializable(date);
+    }
+
     public static final Creator<Note> CREATOR = new Creator<Note>() {
         @Override
         public Note createFromParcel(Parcel in) {
@@ -17,37 +46,6 @@ public class Note implements Parcelable {
             return new Note[size];
         }
     };
-    private final String name;
-    private String description;
-    private int descriptionIndex;
-    private Date date;
-
-    public Note(String name, Date date,String description) {
-        this.name = name;
-        this.date = date;
-        this.description = description;
-    }
-
-    public Note(String name, int descriptionIndex, Date date) {
-        this.name = name;
-        this.descriptionIndex = descriptionIndex;
-        this.date = date;
-    }
-
-    protected Note(Parcel in) {
-        name = in.readString();
-        descriptionIndex = in.readInt();
-        description = in.readString();
-        date = (java.util.Date) in.readSerializable();
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(getName());
-        dest.writeInt(getDescriptionIndex());
-        dest.writeSerializable(date);
-        dest.writeString(getDescription());
-    }
 
     @Override
     public int describeContents() {
@@ -74,7 +72,4 @@ public class Note implements Parcelable {
         return description;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
 }

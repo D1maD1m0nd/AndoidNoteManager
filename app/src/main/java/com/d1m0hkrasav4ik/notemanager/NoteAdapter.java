@@ -49,14 +49,14 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
     public class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView title;
         private final TextView description;
-        private final CardView cardView;
+        private final TextView date;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            cardView = itemView.findViewById(R.id.mtrl_card_checked_layer_id);
+            CardView cardView = itemView.findViewById(R.id.mtrl_card_checked_layer_id);
             //инциализируем основные вью для карточки
             title = itemView.findViewById(R.id.title);
             description = itemView.findViewById(R.id.description);
-
+            date = itemView.findViewById(R.id.date);
             cardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -70,6 +70,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
         public void setData(Note note) {
             title.setText(note.getName());
             description.setText(note.getDescription());
+            date.setText(note.getDate().toString());
         }
     }
 }

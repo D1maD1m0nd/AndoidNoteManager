@@ -55,7 +55,6 @@ public class NameNoteFragment extends Fragment {
     public void onViewCreated(@NonNull View view,
                               @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        //initList(view);
     }
 
     // Сохраним текущую позицию (вызывается перед выходом из фрагмента)
@@ -77,7 +76,11 @@ public class NameNoteFragment extends Fragment {
             currentNote = savedInstanceState.getParcelable(CURRENT_NOTE);
         } else {
             // Если восстановить не удалось, то сделаем объект с первым индексом
-            currentNote = new Note(getResources().getStringArray(R.array.names)[0], 0, new Date());
+            currentNote = new Note(
+                    getResources().getStringArray(R.array.names)[0],
+                    new Date(),
+                    getResources().getStringArray(R.array.descriptions)[0],
+                    0);
         }
 
         if (isLand) {
@@ -97,31 +100,13 @@ public class NameNoteFragment extends Fragment {
         adapter.setItemClickListener(new NoteAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                Toast.makeText(getContext(), String.format(Locale.getDefault(), "Позиция - %d", position), Toast.LENGTH_SHORT).show();
+                currentNote = data.getCardData(position);
+                showDescription(currentNote);
             }
         });
 
     }
-    private void initList(View view) {
-        LinearLayout layoutView = (LinearLayout) view;
-        final int TEXT_SIZE = 35;
-        String[] notes = getResources().getStringArray(R.array.names);
-        int len = notes.length;
-        for (int i = 0; i < len; i++) {
-            String note = notes[i];
-            TextView tv = new TextView(getContext());
-            tv.setText(note);
-            tv.setTextSize(TEXT_SIZE);
-            layoutView.addView(tv);
 
-            final int fi = i;
-            //назначаем слушателя события
-            tv.setOnClickListener(v -> {
-                currentNote = new Note(note, fi, new Date());
-                showDescription(currentNote);
-            });
-        }
-    }
 
     private void showDescription(Note currentNote) {
         if (isLand) {
