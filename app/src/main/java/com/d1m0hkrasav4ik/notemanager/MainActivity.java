@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
             int id = item.getItemId();
             switch(id){
                 case notes:
-                    addFragment(new NameNoteFragment());
+                    addFragment(NameNoteFragment.newInstance());
                     return true;
                 case settings:
                     addFragment(new SettingsFragment());

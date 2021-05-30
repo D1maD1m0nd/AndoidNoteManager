@@ -27,6 +27,14 @@ public class NameNoteFragment extends Fragment {
     private Note currentNote;//текущая заметка
     private boolean isLand;
 
+    public static NameNoteFragment newInstance() {
+
+        Bundle args = new Bundle();
+
+        NameNoteFragment fragment = new NameNoteFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     // При создании фрагмента укажем его макет
     @Override

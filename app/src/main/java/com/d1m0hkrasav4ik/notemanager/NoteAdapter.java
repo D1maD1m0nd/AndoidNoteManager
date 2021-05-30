@@ -1,7 +1,10 @@
 package com.d1m0hkrasav4ik.notemanager;
 
+import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -9,22 +12,37 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
+    private final INoteCardSource dataSource;
+    private OnItemClickListener itemClickListener;
+
+    public NoteAdapter(INoteCardSource dataSource) {
+        this.dataSource = dataSource;
+    }
 
     @NonNull
     @org.jetbrains.annotations.NotNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull @org.jetbrains.annotations.NotNull ViewGroup parent, int viewType) {
-        return null;
+    public NoteAdapter.ViewHolder onCreateViewHolder(@NonNull @org.jetbrains.annotations.NotNull ViewGroup parent, int viewType) {
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item, parent, false);
+        return new ViewHolder(v);
     }
 
     @Override
     public void onBindViewHolder(@NonNull @org.jetbrains.annotations.NotNull NoteAdapter.ViewHolder holder, int position) {
-
+        holder.setData(dataSource.getCardData(position));
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return dataSource.size();
+    }
+    public void setItemClickListener(OnItemClickListener itemClickListener) {
+        this.itemClickListener = itemClickListener;
+    }
+
+    // Интерфейс для обработки нажатий, как в ListView
+    public interface OnItemClickListener {
+        void onItemClick(View view , int position);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
