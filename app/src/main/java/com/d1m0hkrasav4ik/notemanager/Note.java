@@ -18,8 +18,15 @@ public class Note implements Parcelable {
         }
     };
     private final String name;
-    private final int descriptionIndex;
+    private String description;
+    private int descriptionIndex;
     private Date date;
+
+    public Note(String name, Date date,String description) {
+        this.name = name;
+        this.date = date;
+        this.description = description;
+    }
 
     public Note(String name, int descriptionIndex, Date date) {
         this.name = name;
@@ -30,6 +37,7 @@ public class Note implements Parcelable {
     protected Note(Parcel in) {
         name = in.readString();
         descriptionIndex = in.readInt();
+        description = in.readString();
         date = (java.util.Date) in.readSerializable();
     }
 
@@ -38,6 +46,7 @@ public class Note implements Parcelable {
         dest.writeString(getName());
         dest.writeInt(getDescriptionIndex());
         dest.writeSerializable(date);
+        dest.writeString(getDescription());
     }
 
     @Override
@@ -59,5 +68,13 @@ public class Note implements Parcelable {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
