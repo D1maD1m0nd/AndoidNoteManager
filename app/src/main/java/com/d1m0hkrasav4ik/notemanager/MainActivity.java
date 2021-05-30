@@ -1,9 +1,7 @@
 package com.d1m0hkrasav4ik.notemanager;
 
 import android.os.Bundle;
-import android.view.MenuItem;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -23,11 +21,12 @@ public class MainActivity extends AppCompatActivity {
         initView();
     }
 
-    private void initView(){
+    private void initView() {
         Toolbar toolbar = initToolBar();
         initDrawer(toolbar);
     }
-    private Toolbar initToolBar(){
+
+    private Toolbar initToolBar() {
         Toolbar toolBar = findViewById(R.id.toolbar);
         setSupportActionBar(toolBar);
         return toolBar;
@@ -50,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
         final int aboutApp = R.id.action_about;
         navigationView.setNavigationItemSelectedListener(item -> {
             int id = item.getItemId();
-            switch(id){
+            switch (id) {
                 case notes:
                     addFragment(NameNoteFragment.newInstance());
                     return true;
@@ -66,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void addFragment(Fragment fragment){
+    public void addFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.replace(R.id.notes_app_сontainer, fragment);

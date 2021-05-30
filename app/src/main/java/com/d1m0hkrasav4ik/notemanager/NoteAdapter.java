@@ -1,10 +1,8 @@
 package com.d1m0hkrasav4ik.notemanager;
 
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -37,19 +35,21 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
     public int getItemCount() {
         return dataSource.size();
     }
+
     public void setItemClickListener(OnItemClickListener itemClickListener) {
         this.itemClickListener = itemClickListener;
     }
 
     // Интерфейс для обработки нажатий, как в ListView
     public interface OnItemClickListener {
-        void onItemClick(View view , int position);
+        void onItemClick(View view, int position);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView title;
         private final TextView description;
         private final TextView date;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             CardView cardView = itemView.findViewById(R.id.mtrl_card_checked_layer_id);
@@ -60,7 +60,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
             cardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(itemClickListener != null){
+                    if (itemClickListener != null) {
                         itemClickListener.onItemClick(v, getAdapterPosition());
                     }
                 }

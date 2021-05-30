@@ -6,9 +6,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,7 +16,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.Date;
-import java.util.Locale;
 
 
 public class NameNoteFragment extends Fragment {
@@ -88,7 +84,8 @@ public class NameNoteFragment extends Fragment {
         }
 
     }
-    private void initRecyclerView(RecyclerView recyclerView, INoteCardSource data){
+
+    private void initRecyclerView(RecyclerView recyclerView, INoteCardSource data) {
         recyclerView.setHasFixedSize(true);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
