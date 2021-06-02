@@ -6,6 +6,7 @@ import android.os.Parcelable;
 import java.util.Date;
 
 public class Note implements Parcelable {
+
     public static final Creator<Note> CREATOR = new Creator<Note>() {
         @Override
         public Note createFromParcel(Parcel in) {
@@ -18,25 +19,30 @@ public class Note implements Parcelable {
         }
     };
     private final String name;
+    private final String description;
     private final int descriptionIndex;
     private Date date;
 
-    public Note(String name, int descriptionIndex, Date date) {
+
+    public Note(String name, Date date, String description, int descriptionIndex) {
         this.name = name;
-        this.descriptionIndex = descriptionIndex;
         this.date = date;
+        this.descriptionIndex = descriptionIndex;
+        this.description = description;
     }
 
     protected Note(Parcel in) {
         name = in.readString();
+        description = in.readString();
         descriptionIndex = in.readInt();
-        date = (java.util.Date) in.readSerializable();
+        date = (Date) in.readSerializable();
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(getName());
-        dest.writeInt(getDescriptionIndex());
+        dest.writeString(name);
+        dest.writeString(description);
+        dest.writeInt(descriptionIndex);
         dest.writeSerializable(date);
     }
 
@@ -60,4 +66,9 @@ public class Note implements Parcelable {
     public void setDate(Date date) {
         this.date = date;
     }
+
+    public String getDescription() {
+        return description;
+    }
+
 }

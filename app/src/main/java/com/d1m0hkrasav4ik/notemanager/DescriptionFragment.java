@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TextView;
 
+import androidx.appcompat.widget.AppCompatEditText;
 import androidx.fragment.app.Fragment;
 
 import java.util.Calendar;
@@ -56,7 +57,7 @@ public class DescriptionFragment extends Fragment {
         // Таким способом можно получить головной элемент из макета
         View view = inflater.inflate(R.layout.fragment_name_description, container, false);
         // найти в контейнере элемент текст вью
-        TextView textView = view.findViewById(R.id.description);
+        AppCompatEditText textView = view.findViewById(R.id.description);
         // Получить из ресурсов массив cmрок
         String[] descriptions = getResources().getStringArray(R.array.descriptions);
         // Выбрать по индексу подходящий

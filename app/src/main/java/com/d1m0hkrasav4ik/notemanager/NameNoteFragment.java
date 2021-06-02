@@ -6,14 +6,14 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.Date;
 
@@ -23,13 +23,27 @@ public class NameNoteFragment extends Fragment {
     private Note currentNote;//текущая заметка
     private boolean isLand;
 
+    public static NameNoteFragment newInstance() {
+
+        Bundle args = new Bundle();
+
+        NameNoteFragment fragment = new NameNoteFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     // При создании фрагмента укажем его макет
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_name_note, container, false);
+        View view = inflater.inflate(R.layout.fragment_name_note,
+                container,
+                false);
+        RecyclerView recyclerView = view.findViewById(R.id.recycler_view_lines);
+        INoteCardSource data = new NoteCardSourceImpl(getResources()).initData();
+        initRecyclerView(recyclerView, data);
+        return view;
     }
 
     // вызывается после создания макета фрагмента, здесь мы проинициализируем список
@@ -37,7 +51,6 @@ public class NameNoteFragment extends Fragment {
     public void onViewCreated(@NonNull View view,
                               @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        initList(view);
     }
 
     // Сохраним текущую позицию (вызывается перед выходом из фрагмента)
@@ -59,7 +72,11 @@ public class NameNoteFragment extends Fragment {
             currentNote = savedInstanceState.getParcelable(CURRENT_NOTE);
         } else {
             // Если восстановить не удалось, то сделаем объект с первым индексом
-            currentNote = new Note(getResources().getStringArray(R.array.names)[0], 0, new Date());
+            currentNote = new Note(
+                    getResources().getStringArray(R.array.names)[0],
+                    new Date(),
+                    getResources().getStringArray(R.array.descriptions)[0],
+                    0);
         }
 
         if (isLand) {
@@ -68,26 +85,25 @@ public class NameNoteFragment extends Fragment {
 
     }
 
-    private void initList(View view) {
-        LinearLayout layoutView = (LinearLayout) view;
-        final int TEXT_SIZE = 35;
-        String[] notes = getResources().getStringArray(R.array.names);
-        int len = notes.length;
-        for (int i = 0; i < len; i++) {
-            String note = notes[i];
-            TextView tv = new TextView(getContext());
-            tv.setText(note);
-            tv.setTextSize(TEXT_SIZE);
-            layoutView.addView(tv);
+    private void initRecyclerView(RecyclerView recyclerView, INoteCardSource data) {
+        recyclerView.setHasFixedSize(true);
 
-            final int fi = i;
-            //назначаем слушателя события
-            tv.setOnClickListener(v -> {
-                currentNote = new Note(note, fi, new Date());
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(layoutManager);
+
+        NoteAdapter adapter = new NoteAdapter(data);
+        recyclerView.setAdapter(adapter);
+
+        adapter.setItemClickListener(new NoteAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                currentNote = data.getCardData(position);
                 showDescription(currentNote);
-            });
-        }
+            }
+        });
+
     }
+
 
     private void showDescription(Note currentNote) {
         if (isLand) {
