@@ -5,4 +5,5 @@ public interface INoteCardSource {
     int size();
     void clear();
     int add(Note note);
+    void delete(int position);
 }

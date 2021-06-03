@@ -101,12 +101,11 @@ public class NameNoteFragment extends Fragment {
     }
     @Override
     public boolean onContextItemSelected(@NonNull  MenuItem item) {
+        int position = adapter.getPositon();
         switch (item.getItemId()) {
             case R.id.action_delete:
-
-                return true;
-            case R.id.action_changed:
-
+                Bridge.data.delete(position);
+                adapter.notifyItemRemoved(position);
                 return true;
         }
         return super.onContextItemSelected(item);
@@ -157,7 +156,7 @@ public class NameNoteFragment extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
 
-        adapter = new NoteAdapter(data);
+        adapter = new NoteAdapter(data, this);
         recyclerView.setAdapter(adapter);
 
         adapter.setItemClickListener(new NoteAdapter.OnItemClickListener() {

@@ -5,9 +5,4 @@
         android:icon="@android:drawable/stat_notify_chat"
         android:orderInCategory="10"
         android:title="@string/note_delete" />
-    <item
-        android:id="@+id/action_changed"
-        android:icon="@android:drawable/ic_menu_preferences"
-        android:orderInCategory="10"
-        android:title="@string/note_changed"/>
 </menu>

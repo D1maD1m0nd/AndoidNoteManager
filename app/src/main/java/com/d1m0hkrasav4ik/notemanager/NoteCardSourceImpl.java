@@ -45,4 +45,9 @@ public class NoteCardSourceImpl implements INoteCardSource {
         dataSource.add(note);
         return dataSource.indexOf(note);
     }
+
+    @Override
+    public void delete( int position) {
+        dataSource.remove(position);
+    }
 }
