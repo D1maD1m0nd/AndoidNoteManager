@@ -30,6 +30,11 @@ public class MainActivity extends AppCompatActivity {
         initDrawer(toolbar);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
     private Toolbar initToolBar() {
         Toolbar toolBar = findViewById(R.id.toolbar);
         setSupportActionBar(toolBar);

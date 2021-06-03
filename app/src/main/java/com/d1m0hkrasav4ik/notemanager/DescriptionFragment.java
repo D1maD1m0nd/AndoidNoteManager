@@ -8,11 +8,13 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.widget.AppCompatEditText;
 import androidx.fragment.app.Fragment;
 
 import java.util.Calendar;
+import java.util.Locale;
 
 
 public class DescriptionFragment extends Fragment {
@@ -90,6 +92,8 @@ public class DescriptionFragment extends Fragment {
         mainNote.setDate(dateAndTime.getTime())
                 .setName((String)noteNameView.getText())
                 .setDescription(textView.getText().toString());
+        Bridge.updateBeforeUpdate = true;
+        Toast.makeText(getContext(), "Запись сохранена", Toast.LENGTH_SHORT).show();
 
     }
     // отображаем диалоговое окно для выбора даты

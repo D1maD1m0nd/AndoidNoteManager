@@ -26,6 +26,9 @@ public class NameNoteFragment extends Fragment {
     public static final String CURRENT_NOTE = "CurrentNote";
     private Note currentNote;//текущая заметка
     private boolean isLand;
+    private NoteAdapter adapter;
+    public int position;
+
 
     public static NameNoteFragment newInstance() {
 
@@ -34,6 +37,15 @@ public class NameNoteFragment extends Fragment {
         NameNoteFragment fragment = new NameNoteFragment();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public void onResume() {
+        if(Bridge.updateBeforeUpdate) {
+            adapter.notifyItemChanged(position);
+            Bridge.updateBeforeUpdate = false;
+        }
+        super.onResume();
     }
 
     // При создании фрагмента укажем его макет
@@ -95,13 +107,14 @@ public class NameNoteFragment extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
 
-        NoteAdapter adapter = new NoteAdapter(data);
+        adapter = new NoteAdapter(data);
         recyclerView.setAdapter(adapter);
 
         adapter.setItemClickListener(new NoteAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
                 currentNote = data.getCardData(position);
+                NameNoteFragment.this.position = position;
                 showDescription(currentNote, position);
             }
         });
