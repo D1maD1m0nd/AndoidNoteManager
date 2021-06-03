@@ -19,7 +19,7 @@ import java.util.Locale;
 
 public class DescriptionFragment extends Fragment {
     private AppCompatEditText  textView;
-    private TextView noteNameView;
+    private AppCompatEditText noteNameView;
     private int position;
     private boolean isNewMode;
 
@@ -101,7 +101,7 @@ public class DescriptionFragment extends Fragment {
             Bridge.updateBeforeUpdate = true;
         }
         mainNote.setDate(dateAndTime.getTime())
-                .setName((String)noteNameView.getText())
+                .setName(noteNameView.getText().toString())
                 .setDescription(textView.getText().toString());
 
         Toast.makeText(getContext(), "Запись сохранена", Toast.LENGTH_SHORT).show();

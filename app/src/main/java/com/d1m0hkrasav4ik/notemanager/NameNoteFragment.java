@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -89,6 +90,27 @@ public class NameNoteFragment extends Fragment {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+    @Override
+    public void onCreateContextMenu(@NonNull ContextMenu menu,
+                                    @NonNull  View v,
+                                    @Nullable  ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater inflater = requireActivity().getMenuInflater();
+        inflater.inflate(R.menu.note_menu, menu);
+    }
+    @Override
+    public boolean onContextItemSelected(@NonNull  MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_delete:
+
+                return true;
+            case R.id.action_changed:
+
+                return true;
+        }
+        return super.onContextItemSelected(item);
+
     }
     // вызывается после создания макета фрагмента, здесь мы проинициализируем список
     @Override
