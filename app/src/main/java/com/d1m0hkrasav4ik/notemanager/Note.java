@@ -18,7 +18,6 @@ public class Note implements Parcelable {
             return new Note[size];
         }
     };
-    private final int descriptionIndex;
     private String name;
     private String description;
     private Date date;
@@ -28,7 +27,6 @@ public class Note implements Parcelable {
 
         this.name = name;
         this.date = date;
-        this.descriptionIndex = descriptionIndex;
         this.description = description;
     }
 
@@ -36,14 +34,12 @@ public class Note implements Parcelable {
         this.name = "Новая запись";
         this.date = new Date();
         this.description = "";
-        this.descriptionIndex = 0;
     }
 
     protected Note(Parcel in) {
 
         name = in.readString();
         description = in.readString();
-        descriptionIndex = in.readInt();
         date = (Date) in.readSerializable();
     }
 
@@ -51,7 +47,6 @@ public class Note implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(name);
         dest.writeString(description);
-        dest.writeInt(descriptionIndex);
         dest.writeSerializable(date);
     }
 
@@ -67,11 +62,6 @@ public class Note implements Parcelable {
     public Note setName(String name) {
         this.name = name;
         return this;
-    }
-
-
-    public int getDescriptionIndex() {
-        return descriptionIndex;
     }
 
     public Date getDate() {
