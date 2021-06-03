@@ -5,6 +5,9 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -43,8 +46,8 @@ public class NameNoteFragment extends Fragment {
     public void onResume() {
         if(Bridge.updateBeforeUpdate) {
             adapter.notifyItemChanged(position);
-            Bridge.updateBeforeUpdate = false;
         }
+        Bridge.updateBeforeUpdate = false;
         super.onResume();
     }
 
@@ -59,9 +62,26 @@ public class NameNoteFragment extends Fragment {
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view_lines);
 
         initRecyclerView(recyclerView, Bridge.data);
+        setHasOptionsMenu(true);
         return view;
     }
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.notes_menu, menu);
+    }
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_add:
 
+                return true;
+            case R.id.action_clear:
+                Bridge.data.clear();
+                adapter.notifyDataSetChanged();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
     // вызывается после создания макета фрагмента, здесь мы проинициализируем список
     @Override
     public void onViewCreated(@NonNull View view,

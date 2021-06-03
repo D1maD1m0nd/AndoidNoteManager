@@ -19,4 +19,8 @@
     <string name="navigation_drawer_close">close</string>
     <string name="user_name">Дима Авдошин</string>
     <string name="save">сохранить</string>
+    <string name="clear_all">Очистить все</string>
+    <string name="add_notes">Добавить заметку</string>
+    <string name="note_delete">Удалить</string>
+    <string name="note_changed">Изменить</string>
 </resources>

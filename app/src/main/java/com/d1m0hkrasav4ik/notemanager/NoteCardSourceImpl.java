@@ -34,4 +34,9 @@ public class NoteCardSourceImpl implements INoteCardSource {
     public int size() {
         return dataSource.size();
     }
+
+    @Override
+    public void clear() {
+        dataSource.clear();
+    }
 }
