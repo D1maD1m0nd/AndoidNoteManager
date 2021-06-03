@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         //init
         initView();
-        if(Bridge.data == null) {
+        if (Bridge.data == null) {
             Bridge.data = new NoteCardSourceImpl(getResources()).initData();
         }
     }

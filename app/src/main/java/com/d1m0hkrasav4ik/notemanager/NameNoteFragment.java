@@ -3,7 +3,6 @@ package com.d1m0hkrasav4ik.notemanager;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -21,19 +20,16 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.Date;
-import java.util.Objects;
-
-import static android.content.ContentValues.TAG;
 
 
 public class NameNoteFragment extends Fragment {
     public static final String CURRENT_NOTE = "CurrentNote";
+    public int position;
+    public boolean isNewMode = false;
     private Note currentNote;//текущая заметка
     private boolean isLand;
     private NoteAdapter adapter;
     private RecyclerView recyclerView;
-    public int position;
-    public boolean isNewMode = false;
 
     public static NameNoteFragment newInstance() {
 
@@ -46,11 +42,11 @@ public class NameNoteFragment extends Fragment {
 
     @Override
     public void onResume() {
-        if(Bridge.updateBeforeUpdate) {
+        if (Bridge.updateBeforeUpdate) {
             adapter.notifyItemChanged(position);
             Bridge.updateBeforeUpdate = false;
         }
-        if(isNewMode) {
+        if (isNewMode) {
             isNewMode = false;
             position = Bridge.data.size() - 1;
             adapter.notifyItemInserted(position);
@@ -73,10 +69,12 @@ public class NameNoteFragment extends Fragment {
         setHasOptionsMenu(true);
         return view;
     }
+
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         inflater.inflate(R.menu.notes_menu, menu);
     }
+
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
@@ -91,16 +89,18 @@ public class NameNoteFragment extends Fragment {
         }
         return super.onOptionsItemSelected(item);
     }
+
     @Override
     public void onCreateContextMenu(@NonNull ContextMenu menu,
-                                    @NonNull  View v,
-                                    @Nullable  ContextMenu.ContextMenuInfo menuInfo) {
+                                    @NonNull View v,
+                                    @Nullable ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
         MenuInflater inflater = requireActivity().getMenuInflater();
         inflater.inflate(R.menu.note_menu, menu);
     }
+
     @Override
-    public boolean onContextItemSelected(@NonNull  MenuItem item) {
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
         int position = adapter.getPositon();
         switch (item.getItemId()) {
             case R.id.action_delete:
@@ -111,6 +111,7 @@ public class NameNoteFragment extends Fragment {
         return super.onContextItemSelected(item);
 
     }
+
     // вызывается после создания макета фрагмента, здесь мы проинициализируем список
     @Override
     public void onViewCreated(@NonNull View view,

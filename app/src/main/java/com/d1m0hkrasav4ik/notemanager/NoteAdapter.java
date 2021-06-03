@@ -12,13 +12,12 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 
-
-
 public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
     private final INoteCardSource dataSource;
     private OnItemClickListener itemClickListener;
     private int positon;
-    private Fragment fragment;
+    private final Fragment fragment;
+
     public NoteAdapter(INoteCardSource dataSource, Fragment fragment) {
         this.dataSource = dataSource;
         this.fragment = fragment;
@@ -67,7 +66,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
             title = itemView.findViewById(R.id.title);
             description = itemView.findViewById(R.id.description);
             date = itemView.findViewById(R.id.date);
-            if(fragment != null) {
+            if (fragment != null) {
                 fragment.registerForContextMenu(itemView);
             }
 

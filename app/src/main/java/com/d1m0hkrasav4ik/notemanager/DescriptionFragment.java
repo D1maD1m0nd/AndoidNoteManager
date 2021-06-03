@@ -14,21 +14,18 @@ import androidx.appcompat.widget.AppCompatEditText;
 import androidx.fragment.app.Fragment;
 
 import java.util.Calendar;
-import java.util.Locale;
 
 
 public class DescriptionFragment extends Fragment {
-    private AppCompatEditText  textView;
-    private AppCompatEditText noteNameView;
-    private int position;
-    private boolean isNewMode;
-
     public static final String ARG_NOTE = "note";
     public static final String POSITION = "pos";
     public static final String IS_NEW_MODE = "New mode";
-
     TextView date;
     Calendar dateAndTime = Calendar.getInstance();
+    private AppCompatEditText textView;
+    private AppCompatEditText noteNameView;
+    private int position;
+    private boolean isNewMode;
     private Note note;
     // установка обработчика выбора даты
     DatePickerDialog.OnDateSetListener d = new DatePickerDialog.OnDateSetListener() {
@@ -89,10 +86,11 @@ public class DescriptionFragment extends Fragment {
         });
         return view;
     }
+
     //сохранение записи
     public void save() {
         Note mainNote;
-        if(isNewMode) {
+        if (isNewMode) {
             mainNote = note;
             Bridge.data.add(mainNote);
             Bridge.updateBeforeUpdate = false;
@@ -107,6 +105,7 @@ public class DescriptionFragment extends Fragment {
         Toast.makeText(getContext(), "Запись сохранена", Toast.LENGTH_SHORT).show();
 
     }
+
     // отображаем диалоговое окно для выбора даты
     public void setDate() {
         new DatePickerDialog(getContext(), d,

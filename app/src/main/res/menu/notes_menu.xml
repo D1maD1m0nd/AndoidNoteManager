@@ -9,5 +9,5 @@
         android:id="@+id/action_add"
         android:icon="@android:drawable/ic_menu_preferences"
         android:orderInCategory="10"
-        android:title="@string/add_notes"/>
+        android:title="@string/add_notes" />
 </menu>

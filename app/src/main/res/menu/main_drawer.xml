@@ -9,10 +9,10 @@
         android:id="@+id/action_about"
         android:icon="@android:drawable/ic_dialog_info"
         android:orderInCategory="10"
-        android:title="@string/about_app"/>
+        android:title="@string/about_app" />
     <item
         android:id="@+id/action_settings"
         android:icon="@android:drawable/ic_menu_preferences"
         android:orderInCategory="10"
-        android:title="@string/settings"/>
+        android:title="@string/settings" />
 </menu>
