@@ -1,0 +1,5 @@
+package com.d1m0hkrasav4ik.notemanager;
+
+public class Bridge {
+   public static INoteCardSource data;
+}

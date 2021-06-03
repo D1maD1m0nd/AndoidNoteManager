@@ -3,6 +3,7 @@ package com.d1m0hkrasav4ik.notemanager;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.Date;
+import java.util.Objects;
+
+import static android.content.ContentValues.TAG;
 
 
 public class NameNoteFragment extends Fragment {
@@ -41,8 +45,8 @@ public class NameNoteFragment extends Fragment {
                 container,
                 false);
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view_lines);
-        INoteCardSource data = new NoteCardSourceImpl(getResources()).initData();
-        initRecyclerView(recyclerView, data);
+
+        initRecyclerView(recyclerView, Bridge.data);
         return view;
     }
 
@@ -98,26 +102,27 @@ public class NameNoteFragment extends Fragment {
             @Override
             public void onItemClick(View view, int position) {
                 currentNote = data.getCardData(position);
-                showDescription(currentNote);
+                showDescription(currentNote, position);
             }
         });
 
     }
 
 
-    private void showDescription(Note currentNote) {
+    private void showDescription(Note currentNote, int position) {
         if (isLand) {
             showDescriptionNoteLand(currentNote);
         } else {
-            showDescriptionNotePort(currentNote);
+            showDescriptionNotePort(currentNote, position);
         }
     }
 
-    private void showDescriptionNotePort(Note currentNote) {
+    private void showDescriptionNotePort(Note currentNote, int position) {
         Intent intent = new Intent();
         intent.setClass(getActivity(), DescriptionActivity.class);
 
         intent.putExtra(DescriptionFragment.ARG_NOTE, currentNote);
+        intent.putExtra(DescriptionFragment.POSITION, position);
         startActivity(intent);
     }
 

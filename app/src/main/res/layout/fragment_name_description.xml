@@ -24,12 +24,18 @@
         android:layout_height="wrap_content"
         android:textSize="@dimen/text_size_content_description" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/buttonSetTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
         android:text="@string/change_date" />
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/saveButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:text="@string/save" />
 
 
 </LinearLayout>

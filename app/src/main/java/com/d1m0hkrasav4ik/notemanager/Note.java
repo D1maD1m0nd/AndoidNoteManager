@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.util.Date;
+import java.util.UUID;
 
 public class Note implements Parcelable {
 
@@ -18,13 +19,16 @@ public class Note implements Parcelable {
             return new Note[size];
         }
     };
-    private final String name;
-    private final String description;
+    private  String name;
+
+
+    private  String description;
     private final int descriptionIndex;
     private Date date;
 
 
     public Note(String name, Date date, String description, int descriptionIndex) {
+
         this.name = name;
         this.date = date;
         this.descriptionIndex = descriptionIndex;
@@ -32,6 +36,7 @@ public class Note implements Parcelable {
     }
 
     protected Note(Parcel in) {
+
         name = in.readString();
         description = in.readString();
         descriptionIndex = in.readInt();
@@ -54,6 +59,11 @@ public class Note implements Parcelable {
     public String getName() {
         return name;
     }
+    public Note setName(String name) {
+        this.name = name;
+        return this;
+    }
+
 
     public int getDescriptionIndex() {
         return descriptionIndex;
@@ -63,12 +73,17 @@ public class Note implements Parcelable {
         return date;
     }
 
-    public void setDate(Date date) {
+    public Note setDate(Date date) {
         this.date = date;
+        return this;
     }
 
     public String getDescription() {
         return description;
+    }
+    public Note setDescription(String description) {
+        this.description = description;
+        return this;
     }
 
 }
