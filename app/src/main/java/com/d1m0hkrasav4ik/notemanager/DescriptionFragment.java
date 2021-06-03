@@ -21,9 +21,11 @@ public class DescriptionFragment extends Fragment {
     private AppCompatEditText  textView;
     private TextView noteNameView;
     private int position;
+    private boolean isNewMode;
 
     public static final String ARG_NOTE = "note";
     public static final String POSITION = "pos";
+    public static final String IS_NEW_MODE = "New mode";
 
     TextView date;
     Calendar dateAndTime = Calendar.getInstance();
@@ -55,6 +57,7 @@ public class DescriptionFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             note = getArguments().getParcelable(ARG_NOTE);
+            isNewMode = getArguments().getBoolean(IS_NEW_MODE);
             position = getArguments().getInt(POSITION);
         }
     }
@@ -88,11 +91,19 @@ public class DescriptionFragment extends Fragment {
     }
     //сохранение записи
     public void save() {
-        Note mainNote = Bridge.data.getCardData(position);
+        Note mainNote;
+        if(isNewMode) {
+            mainNote = note;
+            Bridge.data.add(mainNote);
+            Bridge.updateBeforeUpdate = false;
+        } else {
+            mainNote = Bridge.data.getCardData(position);
+            Bridge.updateBeforeUpdate = true;
+        }
         mainNote.setDate(dateAndTime.getTime())
                 .setName((String)noteNameView.getText())
                 .setDescription(textView.getText().toString());
-        Bridge.updateBeforeUpdate = true;
+
         Toast.makeText(getContext(), "Запись сохранена", Toast.LENGTH_SHORT).show();
 
     }

@@ -34,6 +34,12 @@ public class Note implements Parcelable {
         this.descriptionIndex = descriptionIndex;
         this.description = description;
     }
+    public Note() {
+        this.name = "Новая запись";
+        this.date = new Date();
+        this.description =  "";
+        this.descriptionIndex = 0;
+    }
 
     protected Note(Parcel in) {
 

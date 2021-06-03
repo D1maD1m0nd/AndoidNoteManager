@@ -39,4 +39,10 @@ public class NoteCardSourceImpl implements INoteCardSource {
     public void clear() {
         dataSource.clear();
     }
+
+    @Override
+    public int add(Note note) {
+        dataSource.add(note);
+        return dataSource.indexOf(note);
+    }
 }

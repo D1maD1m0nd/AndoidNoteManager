@@ -30,8 +30,9 @@ public class NameNoteFragment extends Fragment {
     private Note currentNote;//текущая заметка
     private boolean isLand;
     private NoteAdapter adapter;
+    private RecyclerView recyclerView;
     public int position;
-
+    public boolean isNewMode = false;
 
     public static NameNoteFragment newInstance() {
 
@@ -46,8 +47,14 @@ public class NameNoteFragment extends Fragment {
     public void onResume() {
         if(Bridge.updateBeforeUpdate) {
             adapter.notifyItemChanged(position);
+            Bridge.updateBeforeUpdate = false;
         }
-        Bridge.updateBeforeUpdate = false;
+        if(isNewMode) {
+            isNewMode = false;
+            position = Bridge.data.size() - 1;
+            adapter.notifyItemInserted(position);
+            recyclerView.scrollToPosition(position);
+        }
         super.onResume();
     }
 
@@ -59,7 +66,7 @@ public class NameNoteFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_name_note,
                 container,
                 false);
-        RecyclerView recyclerView = view.findViewById(R.id.recycler_view_lines);
+        recyclerView = view.findViewById(R.id.recycler_view_lines);
 
         initRecyclerView(recyclerView, Bridge.data);
         setHasOptionsMenu(true);
@@ -73,7 +80,8 @@ public class NameNoteFragment extends Fragment {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_add:
-
+                currentNote = new Note();
+                showDescriptionNotePort(currentNote);
                 return true;
             case R.id.action_clear:
                 Bridge.data.clear();
@@ -156,6 +164,15 @@ public class NameNoteFragment extends Fragment {
 
         intent.putExtra(DescriptionFragment.ARG_NOTE, currentNote);
         intent.putExtra(DescriptionFragment.POSITION, position);
+        startActivity(intent);
+    }
+
+    private void showDescriptionNotePort(Note currentNote) {
+        Intent intent = new Intent();
+        intent.setClass(getActivity(), DescriptionActivity.class);
+        isNewMode = true;
+        intent.putExtra(DescriptionFragment.ARG_NOTE, currentNote);
+        intent.putExtra(DescriptionFragment.IS_NEW_MODE, isNewMode);
         startActivity(intent);
     }
 
