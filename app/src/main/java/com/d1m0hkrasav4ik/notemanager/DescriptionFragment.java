@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.widget.AppCompatEditText;
 import androidx.fragment.app.Fragment;
@@ -17,8 +18,14 @@ import java.util.Calendar;
 
 public class DescriptionFragment extends Fragment {
     public static final String ARG_NOTE = "note";
+    public static final String POSITION = "pos";
+    public static final String IS_NEW_MODE = "New mode";
     TextView date;
     Calendar dateAndTime = Calendar.getInstance();
+    private AppCompatEditText textView;
+    private AppCompatEditText noteNameView;
+    private int position;
+    private boolean isNewMode;
     private Note note;
     // установка обработчика выбора даты
     DatePickerDialog.OnDateSetListener d = new DatePickerDialog.OnDateSetListener() {
@@ -35,7 +42,6 @@ public class DescriptionFragment extends Fragment {
     // Фрагменты рекомендуется создавать через фабричные методы.
     public static DescriptionFragment newInstance(Note note) {
         DescriptionFragment f = new DescriptionFragment();    // создание
-
         // Передача параметра
         Bundle args = new Bundle();
         args.putParcelable(ARG_NOTE, note);
@@ -48,6 +54,8 @@ public class DescriptionFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             note = getArguments().getParcelable(ARG_NOTE);
+            isNewMode = getArguments().getBoolean(IS_NEW_MODE);
+            position = getArguments().getInt(POSITION);
         }
     }
 
@@ -57,13 +65,11 @@ public class DescriptionFragment extends Fragment {
         // Таким способом можно получить головной элемент из макета
         View view = inflater.inflate(R.layout.fragment_name_description, container, false);
         // найти в контейнере элемент текст вью
-        AppCompatEditText textView = view.findViewById(R.id.description);
-        // Получить из ресурсов массив cmрок
-        String[] descriptions = getResources().getStringArray(R.array.descriptions);
+        textView = view.findViewById(R.id.description);
         // Выбрать по индексу подходящий
-        textView.setText(descriptions[note.getDescriptionIndex()]);
+        textView.setText(note.getDescription());
         // Установить название заметки
-        TextView noteNameView = view.findViewById(R.id.textView);
+        noteNameView = view.findViewById(R.id.textView);
         noteNameView.setText(note.getName());
 
         date = view.findViewById(R.id.timeNow);
@@ -73,7 +79,31 @@ public class DescriptionFragment extends Fragment {
         button.setOnClickListener(v -> {
             setDate();
         });
+
+        Button buttonSave = view.findViewById(R.id.saveButton);
+        buttonSave.setOnClickListener(v -> {
+            save();
+        });
         return view;
+    }
+
+    //сохранение записи
+    public void save() {
+        Note mainNote;
+        if (isNewMode) {
+            mainNote = note;
+            Bridge.data.add(mainNote);
+            Bridge.updateBeforeUpdate = false;
+        } else {
+            mainNote = Bridge.data.getCardData(position);
+            Bridge.updateBeforeUpdate = true;
+        }
+        mainNote.setDate(dateAndTime.getTime())
+                .setName(noteNameView.getText().toString())
+                .setDescription(textView.getText().toString());
+
+        Toast.makeText(getContext(), "Запись сохранена", Toast.LENGTH_SHORT).show();
+
     }
 
     // отображаем диалоговое окно для выбора даты
