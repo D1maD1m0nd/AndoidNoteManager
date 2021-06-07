@@ -34,4 +34,20 @@ public class NoteCardSourceImpl implements INoteCardSource {
     public int size() {
         return dataSource.size();
     }
+
+    @Override
+    public void clear() {
+        dataSource.clear();
+    }
+
+    @Override
+    public void add(Note note) {
+        dataSource.add(note);
+        dataSource.indexOf(note);
+    }
+
+    @Override
+    public void delete(int position) {
+        dataSource.remove(position);
+    }
 }

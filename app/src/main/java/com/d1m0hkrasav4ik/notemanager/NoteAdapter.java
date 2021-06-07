@@ -1,5 +1,6 @@
 package com.d1m0hkrasav4ik.notemanager;
 
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,15 +8,23 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 
 public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
     private final INoteCardSource dataSource;
     private OnItemClickListener itemClickListener;
+    private int positon;
+    private final Fragment fragment;
 
-    public NoteAdapter(INoteCardSource dataSource) {
+    public NoteAdapter(INoteCardSource dataSource, Fragment fragment) {
         this.dataSource = dataSource;
+        this.fragment = fragment;
+    }
+
+    public int getPositon() {
+        return positon;
     }
 
     @NonNull
@@ -57,13 +66,22 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
             title = itemView.findViewById(R.id.title);
             description = itemView.findViewById(R.id.description);
             date = itemView.findViewById(R.id.date);
-            cardView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (itemClickListener != null) {
-                        itemClickListener.onItemClick(v, getAdapterPosition());
-                    }
+            if (fragment != null) {
+                fragment.registerForContextMenu(itemView);
+            }
+
+            cardView.setOnClickListener(v -> {
+
+                if (itemClickListener != null) {
+                    itemClickListener.onItemClick(v, getAdapterPosition());
                 }
+            });
+            cardView.setOnLongClickListener(v -> {
+                positon = getAdapterPosition();
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    v.showContextMenu(10, 30);
+                }
+                return true;
             });
         }
 

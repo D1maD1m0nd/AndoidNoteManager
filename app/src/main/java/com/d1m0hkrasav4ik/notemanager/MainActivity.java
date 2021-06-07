@@ -18,12 +18,21 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //init
         initView();
+        if (Bridge.data == null) {
+            Bridge.data = new NoteCardSourceImpl(getResources()).initData();
+        }
     }
 
     private void initView() {
         Toolbar toolbar = initToolBar();
         initDrawer(toolbar);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 
     private Toolbar initToolBar() {

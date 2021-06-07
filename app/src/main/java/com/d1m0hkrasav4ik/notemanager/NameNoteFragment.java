@@ -3,7 +3,11 @@ package com.d1m0hkrasav4ik.notemanager;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -20,8 +24,12 @@ import java.util.Date;
 
 public class NameNoteFragment extends Fragment {
     public static final String CURRENT_NOTE = "CurrentNote";
+    public int position;
+    public boolean isNewMode = false;
     private Note currentNote;//текущая заметка
     private boolean isLand;
+    private NoteAdapter adapter;
+    private RecyclerView recyclerView;
 
     public static NameNoteFragment newInstance() {
 
@@ -32,6 +40,21 @@ public class NameNoteFragment extends Fragment {
         return fragment;
     }
 
+    @Override
+    public void onResume() {
+        if (Bridge.updateBeforeUpdate) {
+            adapter.notifyItemChanged(position);
+            Bridge.updateBeforeUpdate = false;
+        }
+        if (isNewMode) {
+            isNewMode = false;
+            position = Bridge.data.size() - 1;
+            adapter.notifyItemInserted(position);
+            recyclerView.scrollToPosition(position);
+        }
+        super.onResume();
+    }
+
     // При создании фрагмента укажем его макет
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -40,10 +63,53 @@ public class NameNoteFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_name_note,
                 container,
                 false);
-        RecyclerView recyclerView = view.findViewById(R.id.recycler_view_lines);
-        INoteCardSource data = new NoteCardSourceImpl(getResources()).initData();
-        initRecyclerView(recyclerView, data);
+        recyclerView = view.findViewById(R.id.recycler_view_lines);
+
+        initRecyclerView(recyclerView, Bridge.data);
+        setHasOptionsMenu(true);
         return view;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.notes_menu, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_add:
+                currentNote = new Note();
+                showDescriptionNotePort(currentNote);
+                return true;
+            case R.id.action_clear:
+                Bridge.data.clear();
+                adapter.notifyDataSetChanged();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onCreateContextMenu(@NonNull ContextMenu menu,
+                                    @NonNull View v,
+                                    @Nullable ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater inflater = requireActivity().getMenuInflater();
+        inflater.inflate(R.menu.note_menu, menu);
+    }
+
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
+        int position = adapter.getPositon();
+        switch (item.getItemId()) {
+            case R.id.action_delete:
+                Bridge.data.delete(position);
+                adapter.notifyItemRemoved(position);
+                return true;
+        }
+        return super.onContextItemSelected(item);
+
     }
 
     // вызывается после создания макета фрагмента, здесь мы проинициализируем список
@@ -91,33 +157,44 @@ public class NameNoteFragment extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
 
-        NoteAdapter adapter = new NoteAdapter(data);
+        adapter = new NoteAdapter(data, this);
         recyclerView.setAdapter(adapter);
 
         adapter.setItemClickListener(new NoteAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
                 currentNote = data.getCardData(position);
-                showDescription(currentNote);
+                NameNoteFragment.this.position = position;
+                showDescription(currentNote, position);
             }
         });
 
     }
 
 
-    private void showDescription(Note currentNote) {
+    private void showDescription(Note currentNote, int position) {
         if (isLand) {
             showDescriptionNoteLand(currentNote);
         } else {
-            showDescriptionNotePort(currentNote);
+            showDescriptionNotePort(currentNote, position);
         }
+    }
+
+    private void showDescriptionNotePort(Note currentNote, int position) {
+        Intent intent = new Intent();
+        intent.setClass(getActivity(), DescriptionActivity.class);
+
+        intent.putExtra(DescriptionFragment.ARG_NOTE, currentNote);
+        intent.putExtra(DescriptionFragment.POSITION, position);
+        startActivity(intent);
     }
 
     private void showDescriptionNotePort(Note currentNote) {
         Intent intent = new Intent();
         intent.setClass(getActivity(), DescriptionActivity.class);
-
+        isNewMode = true;
         intent.putExtra(DescriptionFragment.ARG_NOTE, currentNote);
+        intent.putExtra(DescriptionFragment.IS_NEW_MODE, isNewMode);
         startActivity(intent);
     }
 
