@@ -1,4 +1,4 @@
-package com.d1m0hkrasav4ik.notemanager;
+package com.d1m0hkrasav4ik.notemanager.ui;
 
 import android.os.Build;
 import android.view.LayoutInflater;
@@ -10,6 +10,10 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.d1m0hkrasav4ik.notemanager.data.INoteCardSource;
+import com.d1m0hkrasav4ik.notemanager.data.Note;
+import com.d1m0hkrasav4ik.notemanager.R;
 
 
 public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {

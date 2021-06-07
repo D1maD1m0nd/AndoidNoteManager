@@ -1,4 +1,4 @@
-package com.d1m0hkrasav4ik.notemanager;
+package com.d1m0hkrasav4ik.notemanager.data;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -23,7 +23,7 @@ public class Note implements Parcelable {
     private Date date;
 
 
-    public Note(String name, Date date, String description, int descriptionIndex) {
+    public Note(String name, Date date, String description) {
 
         this.name = name;
         this.date = date;
