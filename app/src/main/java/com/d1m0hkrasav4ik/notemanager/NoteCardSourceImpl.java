@@ -26,6 +26,11 @@ public class NoteCardSourceImpl implements INoteCardSource {
     }
 
     @Override
+    public INoteCardSource init(CardsSourceResponse cardsSourceResponse) {
+        return null;
+    }
+
+    @Override
     public Note getCardData(int position) {
         return dataSource.get(position);
     }
