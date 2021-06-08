@@ -102,6 +102,7 @@ public class DescriptionFragment extends Fragment {
         } else {
             mainNote = Bridge.data.getCardData(position);
             writeChanged(mainNote);
+            Bridge.data.update(mainNote);
             Bridge.updateBeforeUpdate = true;
         }
         Toast.makeText(getContext(), "Запись сохранена", Toast.LENGTH_SHORT).show();

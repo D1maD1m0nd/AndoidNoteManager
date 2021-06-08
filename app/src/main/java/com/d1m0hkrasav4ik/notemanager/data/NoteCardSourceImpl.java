@@ -23,18 +23,16 @@ import java.util.List;
 import java.util.Map;
 
 public class NoteCardSourceImpl implements INoteCardSource {
-    private final List<Note> dataSource;
-    private final Resources resources;
+    private  List<Note> dataSource;
     private static final String TAG = "notesRead";
     private static  final String COLLECTION_NAME = "notesdb";
     // Коллекция документов
     private CollectionReference collection;
 
     public FirebaseFirestore db;
-    public NoteCardSourceImpl(Resources resources) {
+    public NoteCardSourceImpl() {
         db = FirebaseFirestore.getInstance();
         dataSource = new ArrayList<>(5);
-        this.resources = resources;
         collection = db.collection(COLLECTION_NAME);
     }
     public NoteCardSourceImpl initDataFireBase(){
@@ -52,7 +50,6 @@ public class NoteCardSourceImpl implements INoteCardSource {
                                 String id = document.getId();
                                 Note cardData = Mapper.toCardData(id, doc);
                                 dataSource.add(cardData);
-
                             }
                         } else {
                             Log.w(TAG, "Error getting documents.", task.getException());
@@ -61,15 +58,7 @@ public class NoteCardSourceImpl implements INoteCardSource {
                 });
         return this;
     }
-    public NoteCardSourceImpl initData() {
-        String[] names = resources.getStringArray(R.array.names);
-        String[] descriptions = resources.getStringArray(R.array.descriptions);
-        final int len = descriptions.length;
-        for (int i = 0; i < len; i++) {
-            dataSource.add(new Note(names[i], Calendar.getInstance().getTime(), descriptions[i]));
-        }
-        return this;
-    }
+
 
     @Override
     public Note getCardData(int position) {
@@ -83,7 +72,11 @@ public class NoteCardSourceImpl implements INoteCardSource {
 
     @Override
     public void clear() {
-        dataSource.clear();
+        for (Note cardData: dataSource) {
+            collection.document(cardData.getId()).delete();
+        }
+
+        dataSource = new ArrayList<>();
     }
 
 
@@ -99,5 +92,13 @@ public class NoteCardSourceImpl implements INoteCardSource {
         // Удалить документ с определённым идентификатором
         collection.document(note.getId()).delete();
         dataSource.remove(note);
+    }
+
+    @Override
+    public void update(Note note) {
+        String id = note.getId();
+        // Изменить документ по идентификатору
+        collection.document(id).set(Mapper.toDocument(note));
+
     }
 }
