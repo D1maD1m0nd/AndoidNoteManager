@@ -8,11 +8,21 @@ import java.util.Date;
 public class Note implements Parcelable {
 
 
+    public static final Creator<Note> CREATOR = new Creator<Note>() {
+        @Override
+        public Note createFromParcel(Parcel in) {
+            return new Note(in);
+        }
+
+        @Override
+        public Note[] newArray(int size) {
+            return new Note[size];
+        }
+    };
     private String id;
     private String name;
     private String description;
     private Date date;
-
 
     public Note(String name, Date date, String description) {
 
@@ -21,13 +31,13 @@ public class Note implements Parcelable {
         this.description = description;
     }
 
+
     public Note() {
         this.name = "Новая запись";
         this.date = new Date();
         this.description = "";
         this.id = "";
     }
-
 
     protected Note(Parcel in) {
         id = in.readString();
@@ -43,18 +53,6 @@ public class Note implements Parcelable {
         dest.writeString(description);
         dest.writeSerializable(date);
     }
-
-    public static final Creator<Note> CREATOR = new Creator<Note>() {
-        @Override
-        public Note createFromParcel(Parcel in) {
-            return new Note(in);
-        }
-
-        @Override
-        public Note[] newArray(int size) {
-            return new Note[size];
-        }
-    };
 
     @Override
     public int describeContents() {

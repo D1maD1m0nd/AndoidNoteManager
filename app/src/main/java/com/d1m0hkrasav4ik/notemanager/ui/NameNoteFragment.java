@@ -19,11 +19,11 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.d1m0hkrasav4ik.notemanager.data.Bridge;
 import com.d1m0hkrasav4ik.notemanager.DescriptionActivity;
+import com.d1m0hkrasav4ik.notemanager.R;
+import com.d1m0hkrasav4ik.notemanager.data.Bridge;
 import com.d1m0hkrasav4ik.notemanager.data.INoteCardSource;
 import com.d1m0hkrasav4ik.notemanager.data.Note;
-import com.d1m0hkrasav4ik.notemanager.R;
 
 import java.util.Date;
 
@@ -148,7 +148,7 @@ public class NameNoteFragment extends Fragment {
                     getResources().getStringArray(R.array.names)[0],
                     new Date(),
                     getResources().getStringArray(R.array.descriptions)[0]
-                    );
+            );
         }
 
         if (isLand) {

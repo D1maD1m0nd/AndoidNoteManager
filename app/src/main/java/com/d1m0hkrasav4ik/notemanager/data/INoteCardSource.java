@@ -10,4 +10,6 @@ public interface INoteCardSource {
     void add(Note note);
 
     void delete(int position);
+
+    void update(Note note);
 }

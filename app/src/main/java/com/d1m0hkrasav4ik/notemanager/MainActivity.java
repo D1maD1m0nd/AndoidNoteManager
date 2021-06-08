@@ -23,11 +23,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        if (Bridge.data == null) {
+            Bridge.data = new NoteCardSourceImpl().initDataFireBase();
+        }
         //init
         initView();
-        if (Bridge.data == null) {
-            Bridge.data = new NoteCardSourceImpl(getResources()).initData().initDataFireBase();
-        }
     }
 
     private void initView() {
