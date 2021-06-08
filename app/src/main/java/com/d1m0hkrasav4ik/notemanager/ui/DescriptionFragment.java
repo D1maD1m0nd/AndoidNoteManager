@@ -14,6 +14,7 @@ import androidx.appcompat.widget.AppCompatEditText;
 import androidx.fragment.app.Fragment;
 
 import com.d1m0hkrasav4ik.notemanager.data.Bridge;
+import com.d1m0hkrasav4ik.notemanager.data.Mapper;
 import com.d1m0hkrasav4ik.notemanager.data.Note;
 import com.d1m0hkrasav4ik.notemanager.R;
 
@@ -93,21 +94,24 @@ public class DescriptionFragment extends Fragment {
 
     //сохранение записи
     public void save() {
-        Note mainNote;
+        Note mainNote = note;
         if (isNewMode) {
-            mainNote = note;
+            writeChanged(mainNote);
             Bridge.data.add(mainNote);
             Bridge.updateBeforeUpdate = false;
         } else {
             mainNote = Bridge.data.getCardData(position);
+            writeChanged(mainNote);
             Bridge.updateBeforeUpdate = true;
         }
-        mainNote.setDate(dateAndTime.getTime())
-                .setName(noteNameView.getText().toString())
-                .setDescription(textView.getText().toString());
-
         Toast.makeText(getContext(), "Запись сохранена", Toast.LENGTH_SHORT).show();
 
+    }
+
+    private void writeChanged(Note note){
+        note.setDate(dateAndTime.getTime())
+                .setName(noteNameView.getText().toString())
+                .setDescription(textView.getText().toString());
     }
 
     // отображаем диалоговое окно для выбора даты

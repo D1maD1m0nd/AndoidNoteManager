@@ -8,7 +8,10 @@ import androidx.annotation.NonNull;
 
 import com.d1m0hkrasav4ik.notemanager.R;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -23,12 +26,16 @@ public class NoteCardSourceImpl implements INoteCardSource {
     private final List<Note> dataSource;
     private final Resources resources;
     private static final String TAG = "notesRead";
-    private static  final String COLLECTION_NAME = "notes";
+    private static  final String COLLECTION_NAME = "notesdb";
+    // Коллекция документов
+    private CollectionReference collection;
 
-    public FirebaseFirestore db = FirebaseFirestore.getInstance();
+    public FirebaseFirestore db;
     public NoteCardSourceImpl(Resources resources) {
+        db = FirebaseFirestore.getInstance();
         dataSource = new ArrayList<>(5);
         this.resources = resources;
+        collection = db.collection(COLLECTION_NAME);
     }
     public NoteCardSourceImpl initDataFireBase(){
             db.collection(COLLECTION_NAME)
@@ -79,12 +86,13 @@ public class NoteCardSourceImpl implements INoteCardSource {
         dataSource.clear();
     }
 
-    @Override
-    public void add(Note note) {
-        dataSource.add(note);
-        dataSource.indexOf(note);
-    }
 
+    @Override
+    public void add(final Note note) {
+        // Добавить документ
+        dataSource.add(note);
+        collection.add(Mapper.toDocument(note));
+    }
     @Override
     public void delete(int position) {
         dataSource.remove(position);
