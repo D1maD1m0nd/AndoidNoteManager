@@ -95,6 +95,9 @@ public class NoteCardSourceImpl implements INoteCardSource {
     }
     @Override
     public void delete(int position) {
-        dataSource.remove(position);
+        Note note =  dataSource.get(position);
+        // Удалить документ с определённым идентификатором
+        collection.document(note.getId()).delete();
+        dataSource.remove(note);
     }
 }

@@ -17,9 +17,10 @@ public class Mapper {
         Timestamp timeStamp = (Timestamp)doc.get(Fields.DATE);
         String name = (String)doc.get(Fields.NAME);
         String description = (String)doc.get(Fields.DESCRIPTION);
+        Note note =  new Note(name,timeStamp.toDate(),description);
+        note.setId(id);
 
-
-        return new Note(name,timeStamp.toDate(),description);
+        return note;
     }
 
     public static Map<String, Object> toDocument(Note cardData){

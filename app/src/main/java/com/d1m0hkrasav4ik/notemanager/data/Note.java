@@ -7,17 +7,8 @@ import java.util.Date;
 
 public class Note implements Parcelable {
 
-    public static final Creator<Note> CREATOR = new Creator<Note>() {
-        @Override
-        public Note createFromParcel(Parcel in) {
-            return new Note(in);
-        }
 
-        @Override
-        public Note[] newArray(int size) {
-            return new Note[size];
-        }
-    };
+    private String id;
     private String name;
     private String description;
     private Date date;
@@ -34,10 +25,12 @@ public class Note implements Parcelable {
         this.name = "Новая запись";
         this.date = new Date();
         this.description = "";
+        this.id = "";
     }
 
-    protected Note(Parcel in) {
 
+    protected Note(Parcel in) {
+        id = in.readString();
         name = in.readString();
         description = in.readString();
         date = (Date) in.readSerializable();
@@ -45,10 +38,23 @@ public class Note implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
         dest.writeString(name);
         dest.writeString(description);
         dest.writeSerializable(date);
     }
+
+    public static final Creator<Note> CREATOR = new Creator<Note>() {
+        @Override
+        public Note createFromParcel(Parcel in) {
+            return new Note(in);
+        }
+
+        @Override
+        public Note[] newArray(int size) {
+            return new Note[size];
+        }
+    };
 
     @Override
     public int describeContents() {
@@ -82,4 +88,11 @@ public class Note implements Parcelable {
         return this;
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 }
