@@ -29,6 +29,10 @@ import com.d1m0hkrasav4ik.notemanager.data.Bridge;
 import com.d1m0hkrasav4ik.notemanager.data.INoteCardSource;
 import com.d1m0hkrasav4ik.notemanager.data.Note;
 
+import com.d1m0hkrasav4ik.notemanager.R;
+import com.d1m0hkrasav4ik.notemanager.data.NoteCardSourceImpl;
+
+
 import java.util.Date;
 
 

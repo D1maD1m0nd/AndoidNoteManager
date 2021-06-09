@@ -17,12 +17,18 @@ import java.util.List;
 import java.util.Map;
 
 public class NoteCardSourceImpl implements INoteCardSource {
+
+    private  List<Note> dataSource;
+
     private static final String TAG = "notesRead";
     private static final String COLLECTION_NAME = "notesdb";
     public FirebaseFirestore db;
     private List<Note> dataSource;
     // Коллекция документов
     private final CollectionReference collection;
+
+
+    public FirebaseFirestore db;
 
     public NoteCardSourceImpl() {
         db = FirebaseFirestore.getInstance();
@@ -56,7 +62,6 @@ public class NoteCardSourceImpl implements INoteCardSource {
 
 
 
-
     @Override
     public Note getCardData(int position) {
         return dataSource.get(position);
@@ -69,7 +74,9 @@ public class NoteCardSourceImpl implements INoteCardSource {
 
     @Override
     public void clear() {
-        for (Note cardData : dataSource) {
+
+        for (Note cardData: dataSource) {
+
             collection.document(cardData.getId()).delete();
         }
 
