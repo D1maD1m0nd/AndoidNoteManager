@@ -1,6 +1,8 @@
 package com.d1m0hkrasav4ik.notemanager.data;
 
 public interface INoteCardSource {
+    INoteCardSource init(CardsSourceResponse cardsSourceResponse);
+
     Note getCardData(int position);
 
     int size();
