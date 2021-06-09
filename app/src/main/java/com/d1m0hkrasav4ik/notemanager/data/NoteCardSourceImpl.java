@@ -4,6 +4,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.d1m0hkrasav4ik.notemanager.CardsSourceResponse;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
@@ -52,6 +53,8 @@ public class NoteCardSourceImpl implements INoteCardSource {
                 });
         return this;
     }
+
+
 
 
     @Override
