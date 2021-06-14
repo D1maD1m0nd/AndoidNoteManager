@@ -1,4 +1,4 @@
-package com.d1m0hkrasav4ik.notemanager;
+package com.d1m0hkrasav4ik.notemanager.ui;
 
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -18,6 +18,13 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.d1m0hkrasav4ik.notemanager.data.Bridge;
+import com.d1m0hkrasav4ik.notemanager.DescriptionActivity;
+import com.d1m0hkrasav4ik.notemanager.data.INoteCardSource;
+import com.d1m0hkrasav4ik.notemanager.data.Note;
+import com.d1m0hkrasav4ik.notemanager.R;
+import com.d1m0hkrasav4ik.notemanager.data.NoteCardSourceImpl;
 
 import java.util.Date;
 
@@ -141,8 +148,8 @@ public class NameNoteFragment extends Fragment {
             currentNote = new Note(
                     getResources().getStringArray(R.array.names)[0],
                     new Date(),
-                    getResources().getStringArray(R.array.descriptions)[0],
-                    0);
+                    getResources().getStringArray(R.array.descriptions)[0]
+                    );
         }
 
         if (isLand) {

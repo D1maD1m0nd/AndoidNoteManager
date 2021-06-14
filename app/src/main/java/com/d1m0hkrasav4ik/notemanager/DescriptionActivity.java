@@ -5,6 +5,8 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.d1m0hkrasav4ik.notemanager.ui.DescriptionFragment;
+
 public class DescriptionActivity extends AppCompatActivity {
 
     @Override

@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "635483137420",
+    "firebase_url": "https://notemanager-8c569-default-rtdb.firebaseio.com",
+    "project_id": "notemanager-8c569",
+    "storage_bucket": "notemanager-8c569.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:635483137420:android:e7da0752052a09931aa2a9",
+        "android_client_info": {
+          "package_name": "com.d1m0hkrasav4ik.notemanager"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "635483137420-1fgfov2rgtbi576h2a94df0n7m1cjme0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.d1m0hkrasav4ik.notemanager",
+            "certificate_hash": "39aa18f582d956b9b993225f1c5ebaaa33c551eb"
+          }
+        },
+        {
+          "client_id": "635483137420-qlbv8rkud7kpnahqsdh3e1rlbvoid27f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB6Zg344eLfKw8nk3ygeOSKPOnVs9ldWS4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "635483137420-qlbv8rkud7kpnahqsdh3e1rlbvoid27f.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
