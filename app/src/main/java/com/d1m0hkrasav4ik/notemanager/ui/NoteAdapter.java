@@ -11,16 +11,16 @@ import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.d1m0hkrasav4ik.notemanager.R;
 import com.d1m0hkrasav4ik.notemanager.data.INoteCardSource;
 import com.d1m0hkrasav4ik.notemanager.data.Note;
-import com.d1m0hkrasav4ik.notemanager.R;
 
 
 public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
     private final INoteCardSource dataSource;
+    private final Fragment fragment;
     private OnItemClickListener itemClickListener;
     private int positon;
-    private final Fragment fragment;
 
     public NoteAdapter(INoteCardSource dataSource, Fragment fragment) {
         this.dataSource = dataSource;

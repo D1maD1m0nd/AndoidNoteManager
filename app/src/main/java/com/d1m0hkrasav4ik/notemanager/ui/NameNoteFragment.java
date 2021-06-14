@@ -1,5 +1,6 @@
 package com.d1m0hkrasav4ik.notemanager.ui;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -10,21 +11,27 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.d1m0hkrasav4ik.notemanager.data.Bridge;
 import com.d1m0hkrasav4ik.notemanager.DescriptionActivity;
+import com.d1m0hkrasav4ik.notemanager.MainActivity;
+import com.d1m0hkrasav4ik.notemanager.R;
+import com.d1m0hkrasav4ik.notemanager.data.Bridge;
 import com.d1m0hkrasav4ik.notemanager.data.INoteCardSource;
 import com.d1m0hkrasav4ik.notemanager.data.Note;
+
 import com.d1m0hkrasav4ik.notemanager.R;
 import com.d1m0hkrasav4ik.notemanager.data.NoteCardSourceImpl;
+
 
 import java.util.Date;
 
@@ -111,12 +118,44 @@ public class NameNoteFragment extends Fragment {
         int position = adapter.getPositon();
         switch (item.getItemId()) {
             case R.id.action_delete:
-                Bridge.data.delete(position);
-                adapter.notifyItemRemoved(position);
+                showDialogBeforeDelete();
                 return true;
         }
         return super.onContextItemSelected(item);
 
+    }
+
+    public void showDialogBeforeDelete(){
+        // Создаём билдер и передаём контекст приложения
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        // В билдере указываем заголовок окна. Можно указывать как ресурс, так
+        // и строку
+        builder.setTitle(R.string.delete)
+                // Указываем сообщение в окне. Также есть вариант со строковым
+                // параметром
+                .setMessage(R.string.quest_delete)
+                // Из этого окна нельзя выйти кнопкой Back
+                .setCancelable(false)
+                // Устанавливаем отрицательную кнопку
+                .setNegativeButton(R.string.no,
+                        // Ставим слушатель, будем обрабатывать нажатие
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+
+                            }
+                        })
+                // Устанавливаем кнопку. Название кнопки также можно задавать
+                // строкой
+                .setPositiveButton(R.string.yes,
+                        // Ставим слушатель, будем обрабатывать нажатие
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                Bridge.data.delete(position);
+                                adapter.notifyItemRemoved(position);
+                            }
+                        });
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 
     // вызывается после создания макета фрагмента, здесь мы проинициализируем список
@@ -149,7 +188,7 @@ public class NameNoteFragment extends Fragment {
                     getResources().getStringArray(R.array.names)[0],
                     new Date(),
                     getResources().getStringArray(R.array.descriptions)[0]
-                    );
+            );
         }
 
         if (isLand) {

@@ -13,10 +13,9 @@ import android.widget.Toast;
 import androidx.appcompat.widget.AppCompatEditText;
 import androidx.fragment.app.Fragment;
 
-import com.d1m0hkrasav4ik.notemanager.data.Bridge;
-import com.d1m0hkrasav4ik.notemanager.data.Mapper;
-import com.d1m0hkrasav4ik.notemanager.data.Note;
 import com.d1m0hkrasav4ik.notemanager.R;
+import com.d1m0hkrasav4ik.notemanager.data.Bridge;
+import com.d1m0hkrasav4ik.notemanager.data.Note;
 
 import java.util.Calendar;
 
@@ -109,7 +108,7 @@ public class DescriptionFragment extends Fragment {
 
     }
 
-    private void writeChanged(Note note){
+    private void writeChanged(Note note) {
         note.setDate(dateAndTime.getTime())
                 .setName(noteNameView.getText().toString())
                 .setDescription(textView.getText().toString());

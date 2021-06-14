@@ -22,4 +22,8 @@
     <string name="add_notes">Добавить заметку</string>
     <string name="note_delete">Удалить</string>
     <string name="note_changed">Изменить</string>
+    <string name="quest_delete">Вы желаете удалить эту карточку?</string>
+    <string name="no">НЕТ</string>
+    <string name="yes">Да</string>
+    <string name="delete">Удаление</string>
 </resources>
