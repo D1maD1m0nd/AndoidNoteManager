@@ -1,4 +1,4 @@
-package com.d1m0hkrasav4ik.notemanager;
+package com.d1m0hkrasav4ik.notemanager.data;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -6,6 +6,43 @@ import android.os.Parcelable;
 import java.util.Date;
 
 public class Note implements Parcelable {
+
+
+    private String id;
+    private String name;
+    private String description;
+    private Date date;
+
+
+    public Note(String name, Date date, String description) {
+
+        this.name = name;
+        this.date = date;
+        this.description = description;
+    }
+
+    public Note() {
+        this.name = "Новая запись";
+        this.date = new Date();
+        this.description = "";
+        this.id = "";
+    }
+
+
+    protected Note(Parcel in) {
+        id = in.readString();
+        name = in.readString();
+        description = in.readString();
+        date = (Date) in.readSerializable();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeString(name);
+        dest.writeString(description);
+        dest.writeSerializable(date);
+    }
 
     public static final Creator<Note> CREATOR = new Creator<Note>() {
         @Override
@@ -18,42 +55,6 @@ public class Note implements Parcelable {
             return new Note[size];
         }
     };
-    private final int descriptionIndex;
-    private String name;
-    private String description;
-    private Date date;
-
-
-    public Note(String name, Date date, String description, int descriptionIndex) {
-
-        this.name = name;
-        this.date = date;
-        this.descriptionIndex = descriptionIndex;
-        this.description = description;
-    }
-
-    public Note() {
-        this.name = "Новая запись";
-        this.date = new Date();
-        this.description = "";
-        this.descriptionIndex = 0;
-    }
-
-    protected Note(Parcel in) {
-
-        name = in.readString();
-        description = in.readString();
-        descriptionIndex = in.readInt();
-        date = (Date) in.readSerializable();
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(name);
-        dest.writeString(description);
-        dest.writeInt(descriptionIndex);
-        dest.writeSerializable(date);
-    }
 
     @Override
     public int describeContents() {
@@ -67,11 +68,6 @@ public class Note implements Parcelable {
     public Note setName(String name) {
         this.name = name;
         return this;
-    }
-
-
-    public int getDescriptionIndex() {
-        return descriptionIndex;
     }
 
     public Date getDate() {
@@ -92,4 +88,11 @@ public class Note implements Parcelable {
         return this;
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 }

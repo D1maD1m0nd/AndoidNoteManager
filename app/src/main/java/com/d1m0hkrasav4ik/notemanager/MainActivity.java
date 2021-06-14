@@ -10,6 +10,11 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.d1m0hkrasav4ik.notemanager.data.Bridge;
+import com.d1m0hkrasav4ik.notemanager.data.NoteCardSourceImpl;
+import com.d1m0hkrasav4ik.notemanager.ui.AboutAppFragment;
+import com.d1m0hkrasav4ik.notemanager.ui.NameNoteFragment;
+import com.d1m0hkrasav4ik.notemanager.ui.SettingsFragment;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity {
@@ -18,11 +23,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        if (Bridge.data == null) {
+            Bridge.data = new NoteCardSourceImpl().initDataFireBase();
+        }
         //init
         initView();
-        if (Bridge.data == null) {
-            Bridge.data = new NoteCardSourceImpl(getResources()).initData();
-        }
     }
 
     private void initView() {
